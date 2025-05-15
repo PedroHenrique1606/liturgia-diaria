@@ -1,15 +1,15 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { useEffect, useState } from "react"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./components/ui/dialog"
-import { CalendarIcon, Share2 } from "lucide-react"
-import { toast } from "sonner";
-import { Calendar } from "./components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "./components/ui/popover";
-import { Button } from "./components/ui/button";
-import { cn } from "./lib/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { CalendarIcon, Share2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Button } from "./components/ui/button";
+import { Calendar } from "./components/ui/calendar";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "./components/ui/popover";
 import type { CorLiturgica, LiturgiaDiaResponse } from "./interfaces/liturgiaTypes";
+import { cn } from "./lib/utils";
 import { getLiturgicDay } from "./services/getLiturgicApi";
 
 function App() {
@@ -51,15 +51,45 @@ function App() {
   }, [copied]);
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const diaParam = searchParams.get("dia");
+    const mesParam = searchParams.get("mes");
+    const anoParam = searchParams.get("ano");
+
+    const dia = diaParam || String(new Date().getDate()).padStart(2, "0");
+    const mes = mesParam || String(new Date().getMonth() + 1).padStart(2, "0");
+    const ano = anoParam || String(new Date().getFullYear());
+
+    const dateFromParams = new Date(Number(ano), Number(mes) - 1, Number(dia));
+
+    if (!isNaN(dateFromParams.getTime())) {
+      setSelectedDate(dateFromParams);
+    }
+
+    const fetchData = async () => {
+      const data = await getLiturgicDay(dia, mes, ano);
+      if (!data) {
+        toast.error("A liturgia desta data ainda não está disponível nesse site");
+      }
+      setLiturgiaData(data);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (selectedDate) {
       const dia = String(selectedDate.getDate()).padStart(2, "0");
       const mes = String(selectedDate.getMonth() + 1).padStart(2, "0");
       const ano = String(selectedDate.getFullYear());
 
+      const newUrl = `${window.location.pathname}?dia=${dia}&mes=${mes}&ano=${ano}`;
+      window.history.pushState({}, "", newUrl);
+
       const fetchData = async () => {
         const data = await getLiturgicDay(dia, mes, ano);
         if (!data) {
-          toast.error("A liturgia desta data ainda não está disponível nesse site")
+          toast.error("A liturgia desta data ainda não está disponível nesse site");
         }
         setLiturgiaData(data);
       };
