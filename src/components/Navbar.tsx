@@ -33,7 +33,7 @@ const components = [
     },
     {
         title: "Santo Terço",
-        href: "/formacao",
+        href: "/santo-terco",
         description: "Medite e reze os mistérios do Santo Terço.",
     },
 ];
@@ -101,13 +101,13 @@ export function Navbar() {
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
 
-                            <NavigationMenuItem>
+                            {/* <NavigationMenuItem>
                                 <a href="/acenda-vela">
                                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                         Acenda uma vela
                                     </NavigationMenuLink>
                                 </a>
-                            </NavigationMenuItem>
+                            </NavigationMenuItem> */}
                         </NavigationMenuList>
                     </NavigationMenu>
                 </div>
@@ -142,13 +142,13 @@ export function Navbar() {
                             </li>
                         ))}
                         <li>
-                            <a
+                            {/* <a
                                 href="/docs"
                                 className="block px-6 py-4 text-base font-medium hover:bg-accent"
                                 onClick={() => setOpen(false)}
                             >
                                 Acenda uma vela
-                            </a>
+                            </a> */}
                         </li>
                     </ul>
                 </div>
