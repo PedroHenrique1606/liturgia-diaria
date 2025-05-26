@@ -5,6 +5,10 @@ import AcendaVela from "./pages/acenda-vela/AcendaVela";
 import ManualConfissao from "./pages/confissao/confissao";
 import CalendarioLiturgico from "./pages/calendario-liturgico/calendario-liturgico";
 import PrayRosaryPage from "./pages/santo-terco/santo-terco";
+import Oracoes from "./pages/oracoes/oracoes";
+import TercoDaMisericordia from "./pages/misericordia/misericordia";
+import OracoesEucaristicas from "./pages/selecionarOracao/selecionarOracao";
+import OracaoEucaristicaDynamic from "./pages/oracaoEucaristica/oracaoEcarustica";
 
 export const PATHS = {
     home: "/",
@@ -14,6 +18,10 @@ export const PATHS = {
     confession: "/confissao",
     dateliturgic: "/calendario-liturgico",
     santoterco: "/santo-terco",
+    oracoes: "/oracoes",
+    misericordia: "/misericordia",
+    selecionaroracaoeucaristicas: "/oracoes-eucaristicas",
+    oracaoeucaristica: "/oracao-eucaristica/:id"
 };
 
 export default function AppRoutes() {
@@ -27,6 +35,10 @@ export default function AppRoutes() {
                 <Route path={PATHS.confession} element={<ManualConfissao />} />
                 <Route path={PATHS.dateliturgic} element={<CalendarioLiturgico />} />
                 <Route path={PATHS.santoterco} element={<PrayRosaryPage />} />
+                <Route path={PATHS.oracoes} element={<Oracoes />} />
+                <Route path={PATHS.misericordia} element={<TercoDaMisericordia />} />
+                <Route path={PATHS.selecionaroracaoeucaristicas} element={<OracoesEucaristicas />} />
+                <Route path={PATHS.oracaoeucaristica} element={<OracaoEucaristicaDynamic />} />
             </Routes>
         </BrowserRouter>
     );

@@ -4,8 +4,7 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle
+    NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./ui/mode-toggle";
 import React, { useState } from "react";
@@ -74,11 +73,11 @@ export function Navbar() {
                                         <ListItem href="/confissao" title="Confissão">
                                             Prepare-se para uma boa confissão.
                                         </ListItem>
-                                        <ListItem href="/docs/installation" title="Orações Eucarísticas">
-                                            How to install dependencies and structure your app.
+                                        <ListItem href="/oracoes-eucaristicas" title="Orações Eucarísticas">
+                                            Acompanhe a oração eucarística da Santa Missa.
                                         </ListItem>
-                                        <ListItem href="/docs/primitives/typography" title="Typography">
-                                            Styles for headings, paragraphs, lists...etc
+                                        <ListItem href="/misericordia" title="Terço da Misericórdia">
+                                            Reze o Terço da Misericódia.
                                         </ListItem>
                                     </ul>
                                 </NavigationMenuContent>
@@ -100,14 +99,6 @@ export function Navbar() {
                                     </ul>
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
-
-                            {/* <NavigationMenuItem>
-                                <a href="/acenda-vela">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        Acenda uma vela
-                                    </NavigationMenuLink>
-                                </a>
-                            </NavigationMenuItem> */}
                         </NavigationMenuList>
                     </NavigationMenu>
                 </div>
@@ -142,13 +133,6 @@ export function Navbar() {
                             </li>
                         ))}
                         <li>
-                            {/* <a
-                                href="/docs"
-                                className="block px-6 py-4 text-base font-medium hover:bg-accent"
-                                onClick={() => setOpen(false)}
-                            >
-                                Acenda uma vela
-                            </a> */}
                         </li>
                     </ul>
                 </div>

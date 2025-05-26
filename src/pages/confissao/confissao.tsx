@@ -27,7 +27,7 @@ export default function ManualConfissao() {
                                 <div className="space-y-4">
                                     <ManualItem
                                         title="1. Amar a Deus sobre todas as coisas"
-                                        content="sse mandamento nos chama a colocar Deus como prioridade absoluta em nossa vida. Amar a Deus é confiar n’Ele, obedecer aos Seus mandamentos e buscar uma relação íntima e constante com o Senhor. Fiz minhas orações diárias? Tenho confiança em Deus? Frequentei outras religiões ou doutrinas? Reclamei muito? Pus Deus em primeiro lugar ou não? Rezei e fiquei com o Senhor na intimidade do coração? Toquei oração por futilidades? (streaming, jogos, redes sociais...)"
+                                        content="sse mandamento nos chama a colocar Deus como prioridade absoluta em nossa vida. Amar a Deus é confiar n’Ele, obedecer aos Seus mandamentos e buscar uma relação íntima e constante com o Senhor. Fiz minhas orações diárias? Tenho confiança em Deus? Frequentei outras religiões ou doutrinas? Reclamei muito? Pus Deus em primeiro lugar ou não? Rezei e fiquei com o Senhor na intimidade do coração? Troquei oração por futilidades? (streaming, jogos, redes sociais...)"
                                     />
                                     <ManualItem
                                         title="2. Não tomar Seu santo nome em vão"
@@ -88,15 +88,7 @@ export default function ManualConfissao() {
                             </p>
                             <Separator />
                             <blockquote className="border-l-2 pl-4 italic text-primary text-base whitespace-pre-line">
-                                {`Ó, meu Deus, sinto muito por ter te ofendido
-                                e detesto todos os meus pecados,
-                                porque temo a perda do Céu e as dores do inferno,
-                                mas acima de tudo porque eles te ofendem, meu Deus,
-                                que é tudo de bom e merecedor de todo meu amor.
-                                Com firmeza, resolvo, com a ajuda de Tua graça,
-                                confessar meus pecados,
-                                fazer penitência e alterar minha vida.
-                                Amém`}
+                                {`Meus Deus, eu me arrependo de todo coração de vos Ter ofendido, por que sois tão bom e amável. Prometo, com a Vossa graça, esforçar-me para ser bom. Meu Jesus, misericórdia! Senhor meu, Jesus Cristo, Deus e homem verdadeiro, Criador e Redentor meu! Por serdes vós quem sois, sumamente bom e digno de ser amado sobre todas as coisas; e porque vos amo e estimo, pesa-me, Senhor, de todo o meu coração, por vos ter ofendido. Pesa-me também por ter perdido o céu e merecido o inferno. Mas proponho firmemente, ajudado com o auxílio de vossa divina graça, emendar-me e nunca mais vos tornar a ofender. E espero alcançar o perdão das minhas culpas, pela vossa infinita misericórdia. Amém.`}
                             </blockquote>
 
                         </CardContent>
