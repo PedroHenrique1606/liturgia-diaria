@@ -1,5 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { motion } from "framer-motion"
+import backgroundImage from "@/assets/pope-leone-sacada.png";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 export default function PontificePage() {
     return (
@@ -10,7 +11,7 @@ export default function PontificePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
                 className="relative h-96 bg-cover bg-center"
-                style={{ backgroundImage: `url('../src/assets/pope-leone-sacada.png')` }}
+                style={{ backgroundImage: `url(${backgroundImage})` }}
             >
                 <div className="absolute inset-0 bg-black/50" />
                 <div className="relative z-10 flex h-full items-center justify-center">
