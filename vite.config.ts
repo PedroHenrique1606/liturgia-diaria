@@ -24,7 +24,7 @@ export default defineConfig({
         short_name: "Sacrosanctum",
         description: "Um espaço sagrado para sua jornada interior.",
         theme_color: "#ffffff",
-        background_color: "#ffffff",
+        background_color: "#0A0B0B",
         display: "standalone",
         start_url: "/",
         icons: [
