@@ -1,0 +1,64 @@
+name: CI + Deploy Vercel
+
+on:
+  push:
+    branches: [main, development]
+  pull_request:
+    branches: [main, development]
+    types: [closed]
+
+jobs:
+  build-and-test:
+    if: github.event_name == 'push' 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Build do projeto
+        run: npm run build
+
+  deploy-prod:
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.merged == true &&
+      github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalar Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy para Vercel (produção)
+        run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  deploy-dev:
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.merged == true &&
+      github.base_ref == 'development'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalar Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy para Vercel (preview/dev)
+        run: vercel --token ${{ secrets.VERCEL_TOKEN }} --confirm --env VERCEL_ENV=preview
+        env:
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
