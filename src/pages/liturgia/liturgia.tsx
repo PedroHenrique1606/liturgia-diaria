@@ -19,6 +19,7 @@ function Liturgia() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [liturgiaData, setLiturgiaData] = useState<LiturgiaDiaResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const isVigiliaPascal = liturgiaData?.liturgia === 'Sábado Santo - Vigília Pascal'
 
   const corClasses: Record<CorLiturgica, string> = {
     Verde: 'bg-green-100 text-green-800',
@@ -199,112 +200,182 @@ function Liturgia() {
           <div className="h-4 bg-gray-200/50 rounded w-11/12" />
         </div>
       ) : (
-        <Tabs defaultValue="primeira" className="w-full">
-          <div className="flex justify-between items-center mb-4 text-2xl md:text-lg">
-            <TabsList className="grid grid-cols-5 gap-1 w-full">
-              <TabsTrigger className="text-xs md:text-sm" value="oracoes">Orações</TabsTrigger>
-              <TabsTrigger className="text-xs md:text-sm" value="primeira">1ª Leitura</TabsTrigger>
-              <TabsTrigger className="text-xs md:text-sm" value="salmo">Salmo</TabsTrigger>
-              <TabsTrigger className="text-xs md:text-sm" value="segunda">2ª Leitura</TabsTrigger>
-              <TabsTrigger className="text-xs md:text-sm" value="evangelho">Evangelho</TabsTrigger>
-            </TabsList>
-          </div>
-
-          <TabsContent value="oracoes" className={`${fontSize} space-y-6`}>
-            <div>
-              <h3 className="text-lg font-semibold mb-1">Coleta</h3>
-              <p className="leading-relaxed">{liturgiaData?.oracoes.coleta}</p>
+        isVigiliaPascal ? (
+          <Tabs defaultValue="primeira" className="w-full">
+            <div className="flex justify-between items-center mb-4 text-2xl md:text-lg">
+              <TabsList className="grid grid-cols-2 gap-1 w-full">
+                <TabsTrigger className="text-xs md:text-sm" value="primeira">Liturgia da Palavra</TabsTrigger>
+                <TabsTrigger className="text-xs md:text-sm" value="evangelho">Evangelho</TabsTrigger>
+              </TabsList>
             </div>
 
-            <div>
-              <h3 className="text-lg font-semibold mb-1">Oferendas</h3>
-              <p className="leading-relaxed">{liturgiaData?.oracoes.oferendas}</p>
+            <TabsContent value="primeira" className={`${fontSize} space-y-8`}>
+              {liturgiaData?.leituras.primeiraLeitura?.map((leitura, index) => (
+                <div key={`leitura-${index}`}>
+                  <h2 className="text-lg font-semibold mb-2">{index + 1}ª Leitura {leitura.referencia}</h2>
+                  <p className="italic mb-2">{leitura.titulo}</p>
+                  <p className="leading-relaxed whitespace-pre-line">{leitura.texto}</p>
+
+                  {liturgiaData.oracoes.extras?.[index] && (
+                    <div className="mt-4">
+                      <p className="italic font-semibold">{liturgiaData.oracoes.extras[index].titulo}</p>
+                      <p className="leading-relaxed whitespace-pre-line">{liturgiaData.oracoes.extras[index].texto}</p>
+                    </div>
+                  )}
+
+                  {liturgiaData.leituras.salmo?.[index] && (
+                    <div className="mt-6 space-y-3">
+                      <h2 className="text-lg font-semibold mb-2">{liturgiaData.leituras.salmo[index].referencia}</h2>
+                      <p className="mb-2 font-semibold">— {liturgiaData.leituras.salmo[index].refrao}</p>
+                      {liturgiaData.leituras.salmo[index].texto.split('\n').map((linha, i) => (
+                        <p key={i} className="leading-relaxed whitespace-pre-line">{linha.trim()}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {/* Epístola */}
+              {liturgiaData?.leituras.segundaLeitura?.map((leitura, index) => (
+                <div key={`epistola-${index}`}>
+                  <h2 className="text-lg font-semibold mt-8 mb-2">Epístola {leitura.referencia}</h2>
+                  <p className="italic mb-2">{leitura.titulo}</p>
+                  <p className="leading-relaxed whitespace-pre-line">{leitura.texto}</p>
+                </div>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="evangelho">
+              {liturgiaData?.leituras.evangelho?.map((evangelho, index) => {
+                const isPaixao = evangelho.titulo.startsWith("Paixão de nosso Senhor Jesus Cristo");
+                return (
+                  <div key={index}>
+                    <h2 className="text-lg font-semibold mb-2">Evangelho {evangelho.referencia}</h2>
+                    <div className={`${fontSize}`}>
+                      <p className="italic mb-2">{evangelho.titulo}</p>
+                      {!isPaixao && <p>— Glória a vós, Senhor.</p>}
+                      <p className="leading-relaxed mt-2 whitespace-pre-line">{evangelho.texto}</p>
+                      <p className="mt-4 font-semibold">— Palavra da Salvação.</p>
+                      <p>— Glória a vós, Senhor.</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </TabsContent>
+          </Tabs>
+        ) : (
+          <Tabs defaultValue="primeira" className="w-full">
+            <div className="flex justify-between items-center mb-4 text-2xl md:text-lg">
+              <TabsList className="grid grid-cols-5 gap-1 w-full">
+                <TabsTrigger className="text-xs md:text-sm" value="oracoes">Orações</TabsTrigger>
+                <TabsTrigger className="text-xs md:text-sm" value="primeira">1ª Leitura</TabsTrigger>
+                <TabsTrigger className="text-xs md:text-sm" value="salmo">Salmo</TabsTrigger>
+                <TabsTrigger className="text-xs md:text-sm" value="segunda">2ª Leitura</TabsTrigger>
+                <TabsTrigger className="text-xs md:text-sm" value="evangelho">Evangelho</TabsTrigger>
+              </TabsList>
             </div>
 
-            <div>
-              <h3 className="text-lg font-semibold mb-1">Comunhão</h3>
-              <p className="leading-relaxed">{liturgiaData?.oracoes.comunhao}</p>
-            </div>
-
-            {liturgiaData?.oracoes.extras?.map((extra, index) => (
-              <div key={index}>
-                <h3 className="text-lg font-semibold mb-1">{extra.titulo}</h3>
-                <p className="leading-relaxed">{extra.texto}</p>
+            <TabsContent value="oracoes" className={`${fontSize} space-y-6`}>
+              <div>
+                <h3 className="text-lg font-semibold mb-1">Coleta</h3>
+                <p className="leading-relaxed">{liturgiaData?.oracoes.coleta}</p>
               </div>
-            ))}
-          </TabsContent>
-
-          <TabsContent value="primeira" className={`${fontSize} space-y-4`}>
-            {liturgiaData?.leituras.primeiraLeitura?.map((leitura, index) => (
-              <div key={index}>
-                <h2 className="text-lg font-semibold mb-2">{index + 1}ª Leitura {leitura.referencia}</h2>
-                <p className="italic mb-2">{leitura.titulo}</p>
-                <p className="leading-relaxed whitespace-pre-line">{leitura.texto}</p>
+              <div>
+                <h3 className="text-lg font-semibold mb-1">Oferendas</h3>
+                <p className="leading-relaxed">{liturgiaData?.oracoes.oferendas}</p>
               </div>
-            ))}
-          </TabsContent>
+              <div>
+                <h3 className="text-lg font-semibold mb-1">Comunhão</h3>
+                <p className="leading-relaxed">{liturgiaData?.oracoes.comunhao}</p>
+              </div>
+              {liturgiaData?.oracoes.extras?.map((extra, index) => (
+                <div key={index}>
+                  <h3 className="text-lg font-semibold mb-1">{extra.titulo}</h3>
+                  <p className="leading-relaxed">{extra.texto}</p>
+                </div>
+              ))}
+            </TabsContent>
 
-          <TabsContent value="salmo">
-            {liturgiaData?.leituras.salmo?.map((salmos, index) => (
-              <div key={index} className={`${fontSize} space-y-3`}>
-                <h2 className="text-lg font-semibold mb-2">{salmos.referencia}</h2>
-                <p className="mb-2 font-semibold">— {salmos.refrao}</p>
+            <TabsContent value="primeira" className={`${fontSize} space-y-4`}>
+              {liturgiaData?.leituras.primeiraLeitura?.map((leitura, index) => (
+                <div key={index}>
+                  {index > 0 && <p className="italic text-sm mb-1">ou, à escolha: </p>}
+                  <h2 className="text-lg font-semibold mb-2">{index + 1}ª Leitura {leitura.referencia}</h2>
+                  <p className="italic mb-2">{leitura.titulo}</p>
+                  <p className="leading-relaxed whitespace-pre-line">{leitura.texto}</p>
+                </div>
+              ))}
+            </TabsContent>
 
-                {salmos.texto
-                  .split('\n')
-                  .map((verso, i) => (
+            <TabsContent value="salmo">
+              {liturgiaData?.leituras.salmo?.map((salmos, index) => (
+                <div key={index} className={`${fontSize} space-y-3`}>
+                  {index > 0 && <p className="italic text-sm mb-1">ou, à escolha: </p>}
+                  <h2 className="text-lg font-semibold mb-2">{salmos.referencia}</h2>
+                  <p className="mb-2 font-semibold">— {salmos.refrao}</p>
+                  {salmos.texto.split('\n').map((verso, i) => (
                     <p key={i} className="leading-relaxed mt-2 whitespace-pre-line">
                       {verso.trim()}
                     </p>
                   ))}
-              </div>
-            ))}
-          </TabsContent>
-
-          <TabsContent value="segunda" className={`${fontSize} space-y-4`}>
-            {liturgiaData?.leituras.segundaLeitura && liturgiaData.leituras.segundaLeitura.length > 0 ? (
-              liturgiaData.leituras.segundaLeitura.map((leitura, index) => (
-                <div key={index}>
-                  <h2 className="text-lg font-semibold mb-2">
-                    {index + 1}ª Leitura {leitura.referencia}
-                  </h2>
-                  <p className="italic mb-2">{leitura.titulo}</p>
-                  <p className="leading-relaxed mt-2 whitespace-pre-line">{leitura.texto}</p>
                 </div>
-              ))
-            ) : (
-              <p className="italic">Hoje não há segunda leitura.</p>
-            )}
-          </TabsContent>
+              ))}
+            </TabsContent>
 
-          <TabsContent value="evangelho">
-            {liturgiaData?.leituras.evangelho?.map((evangelho, index) => {
-              const isPaixao = evangelho.titulo.startsWith("Paixão de nosso Senhor Jesus Cristo");
-
-              return (
-                <div key={index}>
-                  <h2 className="text-lg font-semibold mb-2">Evangelho {evangelho.referencia}</h2>
-                  <div className={`${fontSize}`}>
-                    <p className="italic mb-2">{evangelho.titulo}</p>
-
-                    {/* Renderiza apenas se não for Paixão */}
-                    {!isPaixao && <p>— Glória a vós, Senhor.</p>}
-
-                    <p className="leading-relaxed mt-2 whitespace-pre-line">
-                      {evangelho.texto}
-                    </p>
-
-                    <p className="mt-4 font-semibold">— Palavra da Salvação.</p>
-                    <p>— Glória a vós, Senhor.</p>
+            <TabsContent value="segunda" className={`${fontSize} space-y-4`}>
+              {liturgiaData?.leituras.segundaLeitura && liturgiaData.leituras.segundaLeitura.length > 0 ? (
+                liturgiaData.leituras.segundaLeitura.map((leitura, index) => (
+                  <div key={index}>
+                    {index > 0 && <p className="italic text-sm mb-1">ou, à escolha: </p>}
+                    <h2 className="text-lg font-semibold mb-2">
+                      {index + 1}ª Leitura {leitura.referencia}
+                    </h2>
+                    <p className="italic mb-2">{leitura.titulo}</p>
+                    <p className="leading-relaxed mt-2 whitespace-pre-line">{leitura.texto}</p>
                   </div>
-                </div>
-              );
-            })}
-          </TabsContent>
-        </Tabs>
+                ))
+              ) : (
+                <p className="italic">Hoje não há segunda leitura.</p>
+              )}
+            </TabsContent>
+
+            <TabsContent value="evangelho">
+              {liturgiaData?.leituras.evangelho?.map((evangelho, index) => {
+                const isPaixao = evangelho.titulo.startsWith("Paixão de nosso Senhor Jesus Cristo");
+
+                return (
+                  <div key={index}>
+                    <h2 className="text-lg font-semibold mb-2">Evangelho {evangelho.referencia}</h2>
+                    <div className={`${fontSize}`}>
+                      <p className="italic mb-2">
+                        {evangelho.titulo.split(/(✠)/g).map((parte, idx) =>
+                          parte === '✠' ? (
+                            <span key={idx} className="text-red-800 font-bold">{parte}</span>
+                          ) : (
+                            <span key={idx}>{parte}</span>
+                          )
+                        )}
+                      </p>
+                      {!isPaixao && <p>— Glória a vós, Senhor.</p>}
+
+                      {evangelho.texto.split('\n').map((i) => (
+                        <p key={i} className="leading-relaxed whitespace-pre-line">
+                          {evangelho.texto}
+                        </p>
+                      ))}
+
+                      <p className="mt-4 font-semibold">— Palavra da Salvação.</p>
+                      <p>— Glória a vós, Senhor.</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </TabsContent>
+          </Tabs>
+        )
       )}
 
-    </main>
+    </main >
   )
 }
 
