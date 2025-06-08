@@ -27,7 +27,7 @@ export default function ManualConfissao() {
                                 <div className="space-y-4">
                                     <ManualItem
                                         title="1. Amar a Deus sobre todas as coisas"
-                                        content="sse mandamento nos chama a colocar Deus como prioridade absoluta em nossa vida. Amar a Deus é confiar n’Ele, obedecer aos Seus mandamentos e buscar uma relação íntima e constante com o Senhor. Fiz minhas orações diárias? Tenho confiança em Deus? Frequentei outras religiões ou doutrinas? Reclamei muito? Pus Deus em primeiro lugar ou não? Rezei e fiquei com o Senhor na intimidade do coração? Troquei oração por futilidades? (streaming, jogos, redes sociais...)"
+                                        content="Esse mandamento nos chama a colocar Deus como prioridade absoluta em nossa vida. Amar a Deus é confiar n’Ele, obedecer aos Seus mandamentos e buscar uma relação íntima e constante com o Senhor. Fiz minhas orações diárias? Tenho confiança em Deus? Frequentei outras religiões ou doutrinas? Reclamei muito? Pus Deus em primeiro lugar ou não? Rezei e fiquei com o Senhor na intimidade do coração? Troquei oração por futilidades? (streaming, jogos, redes sociais...)"
                                     />
                                     <ManualItem
                                         title="2. Não tomar Seu santo nome em vão"
