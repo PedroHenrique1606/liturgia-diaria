@@ -303,6 +303,8 @@ function Liturgia() {
                   <h2 className="text-lg font-semibold mb-2">{index + 1}ª Leitura {leitura.referencia}</h2>
                   <p className="italic mb-2">{leitura.titulo}</p>
                   <p className="leading-relaxed whitespace-pre-line">{leitura.texto}</p>
+                  <p className="mt-4 font-semibold pb-2">— Palavra do Senhor.</p>
+                  <p>— Graças a Deus.</p>
                 </div>
               ))}
             </TabsContent>
@@ -332,6 +334,8 @@ function Liturgia() {
                     </h2>
                     <p className="italic mb-2">{leitura.titulo}</p>
                     <p className="leading-relaxed mt-2 whitespace-pre-line">{leitura.texto}</p>
+                    <p className="mt-4 font-semibold pb-2">— Palavra do Senhor.</p>
+                    <p>— Graças a Deus.</p>
                   </div>
                 ))
               ) : (
